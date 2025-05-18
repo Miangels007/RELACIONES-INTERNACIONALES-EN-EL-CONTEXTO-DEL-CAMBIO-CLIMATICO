@@ -1,0 +1,1065 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz Validado - 90 Preguntas 18 mayo</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f3f3f3; padding: 20px; max-width: 700px; margin: auto; }
+    .quiz-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: #1976d2; }
+    .counter { font-weight: bold; text-align: right; margin-bottom: 10px; }
+    .question { font-size: 1.1em; margin-bottom: 10px; }
+    .options button { 
+	display: block; 
+	width: 100%; 
+	padding: 10px; 
+	margin: 5px 0; 
+	border: none; 
+	border-radius: 8px; 
+	background-color: #eee; 
+	cursor: pointer; 
+	font-size: 1em; 
+	transition: 
+	background-color 0.3s; 
+	text-align: left;
+	}
+    .options button.correct { background-color: #c8e6c9; }
+	
+    .options button.incorrect 
+	{ background-color: #ffcdd2; 
+	color: #b00020; 
+	font-weight: bold; }
+    .next-btn { display: block; width: 100%; padding: 10px; margin-top: 10px; background-color: #1976d2; color: white; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; }
+    #statusMessage { font-weight: bold; margin: 10px 0; }
+    .correct-answer { background-color: #fff3cd; color: #856404; padding: 8px; border-radius: 8px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+<div class="quiz-card" id="quizCard">
+  <h2>Quiz de Repaso Validado</h2>
+  <div class="counter" id="counter"></div>
+  <div class="question" id="question"></div>
+  <div class="options" id="options"></div>
+  <div id="statusMessage"></div>
+  <div class="correct-answer" id="correctAnswerBox" style="display:none;"></div>
+  <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Siguiente</button>
+</div>
+
+<script>
+const quizPreguntas = 
+
+
+[
+{
+"pregunta": "1. ¿Qué exige el Artículo 12 de la CMNUCC a los países parte?",
+"opciones": [
+"a) Reducción obligatoria de emisiones",
+"b) Participación en conferencias anuales",
+"c) Presentar informes climáticos periódicos",
+"d) Financiar proyectos locales"
+],
+"respuesta": 2
+},
+{
+"pregunta": "2. ¿Cuál es el objetivo del Marco de Transparencia Reforzado (MTR)?",
+"opciones": [
+"a) Generar confianza y asegurar rendición de cuentas",
+"b) Reemplazar los compromisos de Kioto",
+"c) Generar ingresos internacionales",
+"d) Mejorar la cooperación militar"
+],
+"respuesta": 0
+},
+{
+"pregunta": "3. ¿Qué instrumento fue reemplazado por los Informes Bienales de Transparencia (IBT)?",
+"opciones": [
+"a) Inventarios Nacionales de GEI",
+"b) Informes Bienales de Actualización (IBA)",
+"c) Revisión Internacional",
+"d) Comunicaciones Nacionales"
+],
+"respuesta": 1
+},
+{
+"pregunta": "4. ¿Desde qué año son obligatorios los IBT según el MTR?",
+"opciones": [
+"a) 2016",
+"b) 2018",
+"c) 2020",
+"d) 2024"
+],
+"respuesta": 3
+},
+{
+"pregunta": "5. ¿Cuál es la base técnica para los reportes tanto en el sistema MRV como en el MTR?",
+"opciones": [
+"a) Sistema de Inventarios Nacionales de GEI",
+"b) Apoyo técnico del Fondo Verde",
+"c) Informes Bienales de Actualización",
+"d) Revisión Internacional"
+],
+"respuesta": 0
+},
+{
+"pregunta": "6. ¿Qué subsistemas organiza el SNICC en Guatemala?",
+"opciones": [
+"a) Transporte, salud, educación y clima",
+"b) GEI, bosques, comunidades, tecnología",
+"c) Ciencia del clima; vulnerabilidad, adaptación y pérdidas y daños; emisiones y absorciones de GEI; monitoreo, reporte y verificación",
+"d) Agua, salud, bosques, energía"
+],
+"respuesta": 2
+},
+{
+"pregunta": "7. ¿Qué institución coordina el Sistema Nacional de Información sobre Cambio Climático (SNICC) en Guatemala?",
+"opciones": [
+"a) MARN",
+"b) MAGA",
+"c) CONAP",
+"d) INAB"
+],
+"respuesta": 0
+},
+{
+"pregunta": "8. ¿Cuál es una función del Subsistema de Ciencia del Clima?",
+"opciones": [
+"a) Emitir alertas de deforestación",
+"b) Coordinar ONGs climáticas",
+"c) Financiar proyectos municipales",
+"d) Generar información sobre variabilidad climática y escenarios de cambio"
+],
+"respuesta": 3
+},
+{
+"pregunta": "9. ¿Qué instituciones participan en el monitoreo del Subsistema de Ciencia del Clima?",
+"opciones": [
+"a) BID, PNUD, FAO",
+"b) INAB, MAGA, MSPAS",
+"c) INSIVUMEH, Anacafé, ICC, SIAP+MICROS, Geónica",
+"d) CONRED, CONAP, MARN"
+],
+"respuesta": 2
+},
+{
+"pregunta": "10. ¿Qué sectores prioriza el Subsistema de Vulnerabilidad, Adaptación y Pérdidas y Daños?",
+"opciones": [
+"a) Energía, salud y turismo",
+"b) Recursos hídricos, salud humana, zonas marino-costeras, agricultura y ecosistemas",
+"c) Educación, transporte y salud",
+"d) Emisiones industriales, comercio y seguridad"
+],
+"respuesta": 1
+},
+{
+"pregunta": "11. ¿Por qué el Subsistema de Vulnerabilidad es clave para la justicia climática?",
+"opciones": [
+"a) Porque prioriza a los países desarrollados",
+"b) Porque elimina las emisiones locales",
+"c) Porque reduce la burocracia interna",
+"d) Porque aporta evidencia sobre sectores vulnerables y justifica apoyo diferenciado"
+],
+"respuesta": 3
+},
+{
+"pregunta": "12. ¿Qué herramienta internacional se utiliza dentro del Subsistema de Emisiones y Absorciones de GEI?",
+"opciones": [
+"a) Reglamentos de la ONUDI",
+"b) Metodologías IPCC",
+"c) Manuales del BID",
+"d) Normas de la OMS"
+],
+"respuesta": 1
+},
+{
+"pregunta": "13. ¿Qué sectores contempla el Subsistema de Emisiones y Absorciones de GEI?",
+"opciones": [
+"a) Bosques, agua, empleo",
+"b) Transporte, salud, comercio",
+"c) Energía, procesos industriales, agricultura, UTCUTS, residuos",
+"d) Mitigación, adaptación, institucionalidad"
+],
+"respuesta": 2
+},
+{
+"pregunta": "14. ¿Qué permite el Subsistema de GEI respecto a las negociaciones internacionales?",
+"opciones": [
+"a) Facilitar acceso a financiamiento internacional al proporcionar datos transparentes",
+"b) Ocultar las emisiones nacionales",
+"c) Evitar reportes climáticos",
+"d) Eliminar la supervisión extranjera"
+],
+"respuesta": 0
+},
+
+
+{
+"pregunta": "¿Qué sectores son evaluados en el inventario de emisiones de GEI de Guatemala?",
+"opciones": [
+"a) Agricultura, turismo, educación y bosques",
+"b) Energía, procesos industriales, agricultura, UTCUTS y residuos",
+"c) Transporte, salud, comercio exterior y cultura",
+"d) Agua potable, minería, telecomunicaciones y educación"
+],
+"respuesta": 1
+},
+
+
+{
+"pregunta": "16. ¿Qué subsistema se centra en el reporte del apoyo recibido por Guatemala?",
+"opciones": [
+"a) Subsistema MRV del apoyo multilateral",
+"b) Subsistema de Emisiones y Absorciones",
+"c) Subsistema de Adaptación",
+"d) Subsistema de Ciencia del Clima"
+],
+"respuesta": 0
+},
+{
+"pregunta": "17. ¿Cuál es uno de los objetivos del proyecto para el desarrollo del sistema MRV de apoyo en Guatemala?",
+"opciones": [
+"a) Vincular los flujos de financiamiento con las metas climáticas",
+"b) Controlar a las ONG locales",
+"c) Eliminar la deuda pública",
+"d) Crear un fondo privado de inversión"
+],
+"respuesta": 0
+},
+{
+"pregunta": "18. ¿Qué institución es la contraparte nacional en el desarrollo del sistema MRV de apoyo?",
+"opciones": [
+"a) MARN",
+"b) PNUD",
+"c) INAB",
+"d) FAO"
+],
+"respuesta": 0
+},
+{
+"pregunta": "19. ¿Qué actor internacional brinda apoyo técnico y financiero al sistema MRV de apoyo en Guatemala?",
+"opciones": [
+"a) GEF",
+"b) BID",
+"c) PNUD",
+"d) Banco Mundial"
+],
+"respuesta": 2
+},
+{
+"pregunta": "20. ¿Cuál es una acción necesaria para fortalecer el SNICC?",
+"opciones": [
+"a) Centralizar el control en el gobierno",
+"b) Disminuir participación de ONGs",
+"c) Construir capacidades técnicas y financieras",
+"d) Reemplazar el MARN"
+],
+"respuesta": 2
+},
+	
+	{
+"pregunta": "21. ¿Qué país desarrolló un sistema MRV con datos verificados que redujo la deforestación en 32%?",
+"opciones": [
+"a) Perú",
+"b) Brasil",
+"c) Colombia",
+"d) Guatemala"
+],
+"respuesta": 2
+},
+{
+"pregunta": "22. ¿Qué monto recibió Colombia como pagos por resultados gracias al sistema MRV?",
+"opciones": [
+"a) 366 millones USD",
+"b) 200 millones USD",
+"c) 150 millones USD",
+"d) 500 millones USD"
+],
+"respuesta": 0
+},
+{
+"pregunta": "23. ¿Cuál es una amenaza al usar MRV/MTR para atraer financiamiento?",
+"opciones": [
+"a) Condiciones impuestas por donantes que no benefician a comunidades locales",
+"b) Saturación del SNICC",
+"c) Reducción de emisiones locales",
+"d) Aumento del turismo"
+],
+"respuesta": 0
+},
+{
+"pregunta": "24. ¿Qué tipo de indicadores puede ayudar a que el MRV responda a los desafíos internos?",
+"opciones": [
+"a) Sociales, además de técnicos",
+"b) De producción agrícola",
+"c) Solo económicos",
+"d) Exclusivamente tecnológicos"
+],
+"respuesta": 0
+},
+{
+"pregunta": "25. ¿Qué ecosistema fue central en la cooperación Sur-Sur entre Costa Rica y República Dominicana?",
+"opciones": [
+"a) Montañas",
+"b) Bosques secos",
+"c) Manglares",
+"d) Desiertos"
+],
+"respuesta": 2
+},
+{
+"pregunta": "26. ¿Qué logro obtuvieron Costa Rica y República Dominicana con respecto a los manglares en la COP28?",
+"opciones": [
+"a) La inclusión de los manglares en los mercados de carbono",
+"b) La venta obligatoria de tierras",
+"c) La exclusión de humedales",
+"d) La eliminación del Artículo 6"
+],
+"respuesta": 0
+},
+{
+"pregunta": "27. ¿Qué organización aprobó 50 millones USD para la iniciativa conjunta de Costa Rica y República Dominicana?",
+"opciones": [
+"a) FMI",
+"b) Banco Mundial",
+"c) BID",
+"d) ONU"
+],
+"respuesta": 1
+},
+{
+"pregunta": "28. ¿Qué riesgo se identificó respecto a la monetización de manglares?",
+"opciones": [
+"a) Exclusión del sector privado",
+"b) Privatización de zonas turísticas",
+"c) Falta de consulta a comunidades costeras",
+"d) Desaparición de fauna marina"
+],
+"respuesta": 2
+},
+{
+"pregunta": "29. ¿Qué crítica se hizo al rol de Estados Unidos en la COP26 y COP27 con relación a los manglares?",
+"opciones": [
+"a) Apoyo al retiro del Acuerdo de París",
+"b) Apoyo incondicional a Guatemala",
+"c) Intervención militar encubierta",
+"d) Necesidad de créditos baratos para compensar emisiones propias"
+],
+"respuesta": 3
+},
+{
+"pregunta": "30. ¿Qué país fue parte de un proyecto fallido de biocombustibles con Sudáfrica?",
+"opciones": [
+"a) Brasil",
+"b) México",
+"c) Colombia",
+"d) Guatemala"
+],
+"respuesta": 0
+},
+{
+"pregunta": "31. ¿Qué porcentaje de los cultivos de caña se perdió en Sudáfrica en el proyecto de biocombustibles?",
+"opciones": [
+"a) 50%",
+"b) 30%",
+"c) 70%",
+"d) 10%"
+],
+"respuesta": 2
+},
+{
+"pregunta": "32. ¿Qué consecuencia social tuvo el proyecto Brasil-Sudáfrica?",
+"opciones": [
+"a) Desplazamiento de pequeños agricultores",
+"b) Exportación masiva de etanol",
+"c) Mejora en la infraestructura vial",
+"d) Aumento del empleo rural"
+],
+"respuesta": 0
+},
+{
+"pregunta": "33. ¿Qué reflexión surge del caso Brasil-Sudáfrica?",
+"opciones": [
+"a) Se deben evitar los diagnósticos locales",
+"b) La CSS siempre es exitosa",
+"c) La CSS necesita diagnósticos locales realistas",
+"d) Se debe replicar todo modelo exitoso sin cambios"
+],
+"respuesta": 2
+},
+{
+"pregunta": "34. ¿Qué compromiso financiero fue acordado en la COP16 y reafirmado en el Acuerdo de París?",
+"opciones": [
+"a) Movilizar 100 mil millones de euros anuales",
+"b) Movilizar 100,000 millones de dólares anuales para 2020",
+"c) Reducir 20% de emisiones globales",
+"d) Eliminar los mercados de carbono"
+],
+"respuesta": 1
+},
+{
+"pregunta": "35. ¿Qué sistema utiliza Guatemala para el seguimiento de donaciones internacionales no reembolsables?",
+"opciones": [
+"a) SINECA",
+"b) SNICC",
+"c) SIGEACI (SEGEPLAN)",
+"d) SNIGT"
+],
+"respuesta": 2
+},
+{
+"pregunta": "36. ¿Cuántos proyectos vinculados al cambio climático se identificaron entre 2015 y 2020?",
+"opciones": [
+"a) 90",
+"b) 102",
+"c) 75",
+"d) 60"
+],
+"respuesta": 0
+},
+{
+"pregunta": "37. ¿Qué cantidad de financiamiento internacional se reportó para esos proyectos (2015–2020)?",
+"opciones": [
+"a) USD 290 millones",
+"b) USD 198 millones",
+"c) USD 400 millones",
+"d) USD 332 millones"
+],
+"respuesta": 3
+},
+{
+"pregunta": "38. ¿Cuál es la fuente más común de financiamiento climático en Guatemala según el número de proyectos?",
+"opciones": [
+"a) Fundaciones privadas",
+"b) Reembolsable",
+"c) Bilateral",
+"d) Multilateral"
+],
+"respuesta": 3
+},
+{
+"pregunta": "39. ¿Cuántos proyectos fueron financiados con fondos no reembolsables?",
+"opciones": [
+"a) 68",
+"b) 70",
+"c) 84",
+"d) 90"
+],
+"respuesta": 2
+},
+{
+"pregunta": "40. ¿Qué fondo internacional no se menciona entre los mecanismos clave de financiamiento climático?",
+"opciones": [
+"a) Fondo para el Medio Ambiente Mundial",
+"b) Fondo Verde para el Clima",
+"c) Fondo Monetario Internacional",
+"d) Fondo de Adaptación"
+],
+"respuesta": 2
+},
+
+
+    {
+        "pregunta": "41. ¿Qué tipo de mecanismo de financiamiento innovador ha implementado Guatemala con Alemania?",
+        "opciones": [
+            "a) Recaudación de bonos verdes",
+            "b) Préstamo con baja tasa",
+            "c) Inversión compartida",
+            "d) Canje de deuda"
+        ],
+        "respuesta": 3
+    },
+    {
+        "pregunta": "42. ¿Cuántos municipios fueron beneficiados por el canje de deuda con Alemania?",
+        "opciones": [
+            "a) 22",
+            "b) 6",
+            "c) 12",
+            "d) 10"
+        ],
+        "respuesta": 1
+    },
+    {
+        "pregunta": "43. ¿Cuál fue el monto del canje de deuda con el Banco KfW de Alemania?",
+        "opciones": [
+            "a) EUR 10 millones",
+            "b) EUR 7 millones",
+            "c) USD 15 millones",
+            "d) USD 10 millones"
+        ],
+        "respuesta": 0
+    },
+    {
+        "pregunta": "44. ¿Qué beneficios obtuvo Guatemala del canje de deuda?",
+        "opciones": [
+            "a) Acceso a mercados internacionales",
+            "b) Reducción de emisiones nacionales",
+            "c) Mejora de carreteras rurales",
+            "d) Alivio parcial de deuda e inversión directa en comunidades vulnerables"
+        ],
+        "respuesta": 3
+    },
+    {
+        "pregunta": "45. ¿Qué instituciones públicas son principales ejecutoras de fondos internacionales climáticos en Guatemala?",
+        "opciones": [
+            "a) INAB, CONAP, MAGA, MARN",
+            "b) PNC y MP",
+            "c) MINEDUC y MINFIN",
+            "d) BID y BCIE"
+        ],
+        "respuesta": 0
+    },
+    {
+        "pregunta": "46. ¿Cuántos departamentos registraron al menos un proyecto climático?",
+        "opciones": [
+            "a) 18",
+            "b) 15",
+            "c) 10",
+            "d) 22"
+        ],
+        "respuesta": 3
+    },
+    {
+        "pregunta": "47. ¿Qué departamentos fueron identificados como altamente vulnerables con poca presencia de proyectos?",
+        "opciones": [
+            "a) Jutiapa y Escuintla",
+            "b) Alta y Baja Verapaz",
+            "c) Petén y Chiquimula",
+            "d) Quetzaltenango y Sacatepéquez"
+        ],
+        "respuesta": 1
+    },
+    {
+        "pregunta": "48. ¿Qué tipo de enfoque beneficia especialmente a comunidades locales e indígenas?",
+        "opciones": [
+            "a) Adaptación",
+            "b) Mitigación",
+            "c) Transversal",
+            "d) Legal"
+        ],
+        "respuesta": 0
+    },
+    {
+        "pregunta": "49. ¿Qué enfoque de proyecto climático beneficia especialmente a instituciones públicas en reducción de emisiones?",
+        "opciones": [
+            "a) Adaptación",
+            "b) Cooperación",
+            "c) Transversal",
+            "d) Mitigación"
+        ],
+        "respuesta": 3
+    },
+    {
+        "pregunta": "50. ¿Qué tipo de proyectos combina adaptación y mitigación?",
+        "opciones": [
+            "a) Transversales",
+            "b) Multilaterales",
+            "c) Bilaterales",
+            "d) Forestales"
+        ],
+        "respuesta": 0
+    },
+    {
+        "pregunta": "51. ¿Cuál de los siguientes temas suele incluir un proyecto transversal?",
+        "opciones": [
+            "a) Exportaciones",
+            "b) Minería de litio",
+            "c) Sensibilización y marcos legales",
+            "d) Energía nuclear"
+        ],
+        "respuesta": 2
+    },
+    {
+        "pregunta": "52. ¿Qué sector recibió más financiamiento en adaptación (2016–2018)?",
+        "opciones": [
+            "a) Recursos forestales y áreas protegidas",
+            "b) Transporte",
+            "c) Comercio exterior",
+            "d) Educación"
+        ],
+        "respuesta": 0
+    },
+    {
+        "pregunta": "53. ¿Qué sector fue identificado como importante pero con poco financiamiento en adaptación?",
+        "opciones": [
+            "a) Ganadería",
+            "b) Agricultura",
+            "c) Salud humana",
+            "d) Agua potable"
+        ],
+        "respuesta": 2
+    },
+    {
+        "pregunta": "54. ¿Qué sector fue el mayor receptor de fondos en mitigación?",
+        "opciones": [
+            "a) Educación ambiental",
+            "b) Transporte",
+            "c) UTCUTS (uso de la tierra, cambio de uso y silvicultura)",
+            "d) Energía eólica"
+        ],
+        "respuesta": 2
+    },
+    {
+        "pregunta": "55. ¿Qué instrumento busca registrar con mayor precisión el gasto público en adaptación y mitigación?",
+        "opciones": [
+            "a) SNIGT",
+            "b) Ley de Cooperación Internacional",
+            "c) Estrategia Nacional de Educación Ambiental",
+            "d) Clasificador de cambio climático"
+        ],
+        "respuesta": 3
+    },
+    {
+        "pregunta": "56. ¿Qué entidades dan seguimiento al Clasificador de cambio climático?",
+        "opciones": [
+            "a) INAB y BID",
+            "b) MINFIN y SEGEPLAN",
+            "c) MAGA y CONAP",
+            "d) MARN y MEM"
+        ],
+        "respuesta": 1
+    },
+    {
+        "pregunta": "57. ¿Qué institución lidera la implementación del Clasificador de cambio climático?",
+        "opciones": [
+            "a) MARN",
+            "b) PNUD",
+            "c) SNICC",
+            "d) CONRED"
+        ],
+        "respuesta": 0
+    },
+    {
+        "pregunta": "58. ¿Qué fondo ha desarrollado políticas específicas para inclusión de género y pueblos indígenas?",
+        "opciones": [
+            "a) Banco Mundial",
+            "b) Fondo Verde para el Clima (FVC)",
+            "c) USAID",
+            "d) CAF"
+        ],
+        "respuesta": 1
+    },
+    {
+        "pregunta": "59. ¿Qué elemento es un requisito en muchas fuentes de financiamiento climático internacional?",
+        "opciones": [
+            "a) Moneda extranjera",
+            "b) Auditoría ambiental",
+            "c) Certificados notariales",
+            "d) Inclusión de género y pueblos indígenas"
+        ],
+        "respuesta": 3
+    },
+    {
+        "pregunta": "60. ¿Cuántas personas fueron capacitadas entre 2015–2020 en temas técnicos y climáticos?",
+        "opciones": [
+            "a) 1650",
+            "b) 980",
+            "c) 1200",
+            "d) 2100"
+        ],
+        "respuesta": 0
+    },
+    {
+        "pregunta": "61. ¿Qué sectores participaron en las capacitaciones mencionadas?",
+        "opciones": [
+            "a) Solo ONGs",
+            "b) Instituciones públicas, comunidades indígenas, academia y sociedad civil",
+            "c) Únicamente instituciones públicas",
+            "d) Empresas internacionales"
+        ],
+        "respuesta": 1
+    },
+    {
+        "pregunta": "62. ¿Qué es una debilidad estructural señalada en los procesos de consulta sobre cambio climático?",
+        "opciones": [
+            "a) Exceso de personal técnico",
+            "b) Uso de tecnologías modernas",
+            "c) Presupuesto elevado",
+            "d) Falta de generación de datos sistematizados"
+        ],
+        "respuesta": 3
+    },
+    {
+        "pregunta": "63. ¿Qué aspecto cultural representa una limitante para implementar acciones climáticas?",
+        "opciones": [
+            "a) Uso excesivo de papel",
+            "b) Saturación de redes sociales",
+            "c) Pertinencia cultural en las políticas públicas",
+            "d) Reducción de transporte público"
+        ],
+        "respuesta": 2
+    },
+    {
+        "pregunta": "64. ¿Qué necesidad clave se menciona para mejorar la acción climática en Guatemala?",
+        "opciones": [
+            "a) Más estudios internacionales",
+            "b) Fortalecer capacidades técnicas e institucionales",
+            "c) Eliminar regulaciones ambientales",
+            "d) Acceso a tierras cultivables"
+        ],
+        "respuesta": 1
+    },
+    {
+        "pregunta": "65. ¿Qué limita la transferencia tecnológica en agricultura según el documento?",
+        "opciones": [
+            "a) Saturación del mercado agrícola",
+            "b) Equipos obsoletos y escasa digitalización de datos",
+            "c) Alta inversión extranjera",
+            "d) Interferencia del sector privado"
+        ],
+        "respuesta": 1
+    },
+    {
+        "pregunta": "66. ¿Qué brecha persiste en la participación de pueblos indígenas y mujeres en temas climáticos?",
+        "opciones": [
+            "a) Manejo del inglés",
+            "b) Acceso a internet",
+            "c) Acceso a tierras",
+            "d) Participación plena y efectiva"
+        ],
+        "respuesta": 3
+    },
+    {
+        "pregunta": "67. ¿Qué tipo de participación enfrenta limitaciones a pesar de ser promovida por políticas climáticas en Guatemala?",
+        "opciones": [
+            "a) Participación comunitaria en turismo",
+            "b) Participación política de extranjeros",
+            "c) Participación empresarial en reciclaje",
+            "d) Participación plena de grupos vulnerables como mujeres e indígenas"
+        ],
+        "respuesta": 3
+    },
+    {
+        "pregunta": "68. ¿Qué objetivo se plantea en el plan de acción recomendado al final del documento?",
+        "opciones": [
+            "a) Cambiar la Constitución",
+            "b) Abordar una limitación del cambio climático desde lo social, político y económico",
+            "c) Crear nuevos partidos políticos",
+            "d) Aumentar los impuestos al carbono"
+        ],
+        "respuesta": 1
+    },
+    {
+        "pregunta": "69. ¿Qué elementos deben incluirse en el plan de acción propuesto?",
+        "opciones": [
+            "a) Publicidad, redes sociales, influencers",
+            "b) Solicitudes a bancos",
+            "c) Objetivos, acciones, recursos, actores clave y evaluación",
+            "d) Análisis financiero externo"
+        ],
+        "respuesta": 2
+    },
+    {
+        "pregunta": "70. ¿Qué países participan en la cooperación regional financiada por EUROCLIMA?",
+        "opciones": [
+            "a) Países de África Occidental",
+            "b) Australia y Nueva Zelanda",
+            "c) Guatemala, Honduras, Colombia, El Salvador y otros de Centroamérica",
+            "d) EE.UU. y Canadá"
+        ],
+        "respuesta": 2
+    },
+    {
+        "pregunta": "71. ¿Qué describe mejor a las turberas?",
+        "opciones": [
+            "a) Selva tropical inundable",
+            "b) Suelo húmedo con materia orgánica en descomposición",
+            "c) Humedal cubierto por sal",
+            "d) Terreno volcánico seco"
+        ],
+        "respuesta": 1
+    },
+    {
+        "pregunta": "72. ¿Qué países replicaron el modelo de Costa Rica y RD para humedales y turberas?",
+        "opciones": [
+            "a) 10 países africanos",
+            "b) 15 países del Sur",
+            "c) Todos los países del G20",
+            "d) Países europeos"
+        ],
+        "respuesta": 1
+    },
+    {
+        "pregunta": "73. ¿Qué permite a los países negociar en bloque según el modelo de Costa Rica y República Dominicana?",
+        "opciones": [
+            "a) Tener un idioma común",
+            "b) Acceso al Fondo Monetario Internacional",
+            "c) Cooperación Sur-Sur con protocolos conjuntos MRV",
+            "d) Ser parte del Mercosur"
+        ],
+        "respuesta": 2
+    },
+    {
+        "pregunta": "74. ¿Qué reflexión se plantea sobre la cooperación Sur-Sur (CSS)?",
+        "opciones": [
+            "a) Puede ser usada como poder blando climático o para intereses geopolíticos",
+            "b) No requiere evaluación",
+            "c) Es innecesaria en contextos locales",
+            "d) Siempre es más efectiva que la cooperación del Norte"
+        ],
+        "respuesta": 0
+    },
+    {
+        "pregunta": "75. ¿Qué porcentaje de los fondos climáticos provienen del Norte, según las reflexiones finales?",
+        "opciones": [
+            "a) 70%",
+            "b) 60%",
+            "c) 80%",
+            "d) 50%"
+        ],
+        "respuesta": 2
+    },
+    {
+        "pregunta": "76. ¿Qué criterio puede ayudar a distinguir una CSS genuina?",
+        "opciones": [
+            "a) Inclusión de evidencia científica local y beneficios compartidos",
+            "b) Alta inversión extranjera",
+            "c) Exclusión de actores locales",
+            "d) Acompañamiento de organismos multilaterales"
+        ],
+        "respuesta": 0
+    },
+    {
+        "pregunta": "77. ¿Qué actividad se propone al final del documento para reflexionar sobre las limitaciones?",
+        "opciones": [
+            "a) Visitar el Congreso de la República",
+            "b) Hacer una infografía",
+            "c) Escribir un ensayo sobre la ONU",
+            "d) Elegir una limitación y desarrollar un plan de acción considerando aspectos sociales, políticos y económicos"
+        ],
+        "respuesta": 3
+    },
+    {
+        "pregunta": "78. ¿Qué riesgo se identificó respecto a la monetización de manglares?",
+        "opciones": [
+            "a) Falta de consulta a comunidades costeras",
+            "b) Privatización de zonas turísticas",
+            "c) Exclusión del sector privado",
+            "d) Desaparición de fauna marina"
+        ],
+        "respuesta": 0
+    },
+    {
+        "pregunta": "79. ¿Qué crítica se hizo al rol de Estados Unidos en la COP26 y COP27 con relación a los manglares?",
+        "opciones": [
+            "a) Apoyo al retiro del Acuerdo de París",
+            "b) Apoyo incondicional a Guatemala",
+            "c) Intervención militar encubierta",
+            "d) Necesidad de créditos baratos para compensar emisiones propias"
+        ],
+        "respuesta": 3
+    },
+    {
+        "pregunta": "80. ¿Qué país fue parte de un proyecto fallido de biocombustibles con Sudáfrica?",
+        "opciones": [
+            "a) Brasil",
+            "b) México",
+            "c) Colombia",
+            "d) Guatemala"
+        ],
+        "respuesta": 0
+    },
+    {
+        "pregunta": "81. ¿Qué porcentaje de los cultivos de caña se perdió en Sudáfrica en el proyecto de biocombustibles?",
+        "opciones": [
+            "a) 50%",
+            "b) 30%",
+            "c) 70%",
+            "d) 10%"
+        ],
+        "respuesta": 2
+    },
+    {
+        "pregunta": "82. ¿Qué consecuencia social tuvo el proyecto Brasil-Sudáfrica?",
+        "opciones": [
+            "a) Desplazamiento de pequeños agricultores",
+            "b) Exportación masiva de etanol",
+            "c) Mejora en la infraestructura vial",
+            "d) Aumento del empleo rural"
+        ],
+        "respuesta": 0
+    },
+    {
+        "pregunta": "83. ¿Qué reflexión surge del caso Brasil-Sudáfrica?",
+        "opciones": [
+            "a) Se deben evitar los diagnósticos locales",
+            "b) La CSS siempre es exitosa",
+            "c) La CSS necesita diagnósticos locales realistas",
+            "d) Se debe replicar todo modelo exitoso sin cambios"
+        ],
+        "respuesta": 2
+    },
+    {
+        "pregunta": "84. ¿Qué compromiso financiero fue acordado en la COP16 y reafirmado en el Acuerdo de París?",
+        "opciones": [
+            "a) Movilizar 100 mil millones de euros anuales",
+            "b) Movilizar 100,000 millones de dólares anuales para 2020",
+            "c) Reducir 20% de emisiones globales",
+            "d) Eliminar los mercados de carbono"
+        ],
+        "respuesta": 1
+    },
+    {
+        "pregunta": "85. ¿Qué sistema utiliza Guatemala para el seguimiento de donaciones internacionales no reembolsables?",
+        "opciones": [
+            "a) SINECA",
+            "b) SNICC",
+            "c) SIGEACI (SEGEPLAN)",
+            "d) SNIGT"
+        ],
+        "respuesta": 2
+    },
+    {
+        "pregunta": "86. ¿Cuántos proyectos vinculados al cambio climático se identificaron entre 2015 y 2020?",
+        "opciones": [
+            "a) 90",
+            "b) 102",
+            "c) 75",
+            "d) 60"
+        ],
+        "respuesta": 0
+    },
+    {
+        "pregunta": "87. ¿Qué cantidad de financiamiento internacional se reportó para esos proyectos (2015–2020)?",
+        "opciones": [
+            "a) USD 290 millones",
+            "b) USD 198 millones",
+            "c) USD 400 millones",
+            "d) USD 332 millones"
+        ],
+        "respuesta": 3
+    },
+    {
+        "pregunta": "88. ¿Cuál es la fuente más común de financiamiento climático en Guatemala según el número de proyectos?",
+        "opciones": [
+            "a) Fundaciones privadas",
+            "b) Reembolsable",
+            "c) Bilateral",
+            "d) Multilateral"
+        ],
+        "respuesta": 3
+    },
+    {
+        "pregunta": "89. ¿Cuántos proyectos fueron financiados con fondos no reembolsables?",
+        "opciones": [
+            "a) 68",
+            "b) 70",
+            "c) 84",
+            "d) 90"
+        ],
+        "respuesta": 2
+    },
+    {
+        "pregunta": "90. ¿Qué fondo internacional no se menciona entre los mecanismos clave de financiamiento climático?",
+        "opciones": [
+            "a) Fondo para el Medio Ambiente Mundial",
+            "b) Fondo Verde para el Clima",
+            "c) Fondo Monetario Internacional",
+            "d) Fondo de Adaptación"
+        ],
+        "respuesta": 2
+    }
+
+
+
+	
+]
+
+
+let currentQuestion = 0;
+let correctAnswers = 0;
+let respuestasUsuario = [];
+
+function showQuestion() {
+  const q = quizPreguntas[currentQuestion];
+  document.getElementById("counter").textContent = `Pregunta ${currentQuestion + 1} de ${quizPreguntas.length}`;
+  document.getElementById("question").textContent = q.pregunta;
+  document.getElementById("statusMessage").textContent = "";
+  document.getElementById("correctAnswerBox").style.display = "none";
+  document.getElementById("nextBtn").style.display = "none";
+
+  const optionsContainer = document.getElementById("options");
+  optionsContainer.innerHTML = "";
+  q.opciones.forEach((op, idx) => {
+    const btn = document.createElement("button");
+    btn.textContent = op;
+    btn.onclick = () => checkAnswer(btn, idx, q.respuesta);
+    optionsContainer.appendChild(btn);
+  });
+}
+
+function checkAnswer(button, selected, correct) {
+  const buttons = document.querySelectorAll(".options button");
+  buttons.forEach((btn, idx) => {
+    btn.disabled = true;
+    if (idx === correct) btn.classList.add("correct");
+    else if (idx === selected) btn.classList.add("incorrect");
+  });
+
+  const q = quizPreguntas[currentQuestion];
+  const correcta = selected === correct;
+
+  respuestasUsuario.push({
+    pregunta: q.pregunta,
+    opciones: q.opciones,
+    correcta: q.respuesta,
+    seleccionada: selected,
+    esCorrecta: correcta
+  });
+
+  if (correcta) {
+    document.getElementById("statusMessage").textContent = "✔️ ¡Correcto!";
+    document.getElementById("statusMessage").style.color = "green";
+    correctAnswers++;
+    document.getElementById("correctAnswerBox").style.display = "none";
+  } else {
+    document.getElementById("statusMessage").textContent = "❌ Incorrecto.";
+    document.getElementById("statusMessage").style.color = "red";
+    document.getElementById("correctAnswerBox").innerHTML = "La respuesta correcta es: <b>" + q.opciones[correct] + "</b>";
+    document.getElementById("correctAnswerBox").style.display = "block";
+  }
+  document.getElementById("nextBtn").style.display = "block";
+}
+
+function nextQuestion() {
+  currentQuestion++;
+  if (currentQuestion < quizPreguntas.length) {
+    showQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+  let detalles = '<h3>✅ Respuestas correctas</h3><ul>';
+  for (let i = 0; i < respuestasUsuario.length; i++) {
+    let r = respuestasUsuario[i];
+    if (r.esCorrecta) {
+      detalles += `<li><b>Pregunta ${i + 1}:</b> ${r.pregunta}<br/>✔️ ${r.opciones[r.seleccionada]}</li>`;
+    }
+  }
+  detalles += '</ul><h3>❌ Respuestas incorrectas</h3><ul>';
+  for (let i = 0; i < respuestasUsuario.length; i++) {
+    let r = respuestasUsuario[i];
+    if (!r.esCorrecta) {
+      detalles += `<li><b>Pregunta ${i + 1}:</b> ${r.pregunta}<br/>✖️ Tu respuesta: ${r.opciones[r.seleccionada]}<br/>✔️ Correcta: ${r.opciones[r.correcta]}</li>`;
+    }
+  }
+  detalles += '</ul>';
+
+  document.getElementById("quizCard").innerHTML = `
+    <h2>¡Quiz finalizado!</h2>
+    <p><b>✅ Correctas:</b> ${correctAnswers}<br>
+       <b>❌ Incorrectas:</b> ${quizPreguntas.length - correctAnswers}<br>
+       <b>📊 Total:</b> ${quizPreguntas.length}</p>
+    <button class="next-btn" onclick="location.reload()">Reintentar</button>
+    <div style="margin-top: 20px;">${detalles}</div>
+  `;
+}
+
+window.onload = showQuestion;
+</script>
+
+</body>
+</html>
